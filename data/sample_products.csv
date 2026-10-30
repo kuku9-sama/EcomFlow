@@ -1,0 +1,6 @@
+sku,title,description,price,currency,stock,category
+SKU-001,旅行收纳袋,虚构演示商品,20.00,USD,100,travel
+SKU-002,桌面支架,虚构演示商品,30.00,USD,50,office
+,缺少编码,错误示例,10.00,USD,5,other
+SKU-001,重复商品,错误示例,20.00,USD,10,travel
+SKU-BAD,负数价格,错误示例,-1.00,USD,10,other
