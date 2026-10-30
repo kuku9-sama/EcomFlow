@@ -1,10 +1,11 @@
-"""SQLite persistence; monetary values are always stored as decimal text."""
+"""SQLite 持久化；金额始终以精确十进制文本保存。"""
+
 import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator
 
-SCHEMA = '''
+SCHEMA = """
 CREATE TABLE IF NOT EXISTS products(sku TEXT PRIMARY KEY,title TEXT NOT NULL,description TEXT NOT NULL,price TEXT NOT NULL,currency TEXT NOT NULL,stock INTEGER NOT NULL CHECK(stock>=0),category TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS imports(id INTEGER PRIMARY KEY,source TEXT NOT NULL,row_number INTEGER NOT NULL,raw TEXT NOT NULL,sku TEXT REFERENCES products(sku),error TEXT,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS platform_listings(id INTEGER PRIMARY KEY,platform TEXT NOT NULL,sku TEXT NOT NULL REFERENCES products(sku),status TEXT NOT NULL,external_id TEXT,error TEXT,attempts INTEGER NOT NULL DEFAULT 0,UNIQUE(platform,sku));
@@ -17,10 +18,12 @@ CREATE TABLE IF NOT EXISTS sync_state(platform TEXT PRIMARY KEY,cursor TEXT NOT 
 CREATE INDEX IF NOT EXISTS idx_orders_platform ON orders(platform,updated_at);
 CREATE INDEX IF NOT EXISTS idx_bills_order ON bills(platform,platform_order_id);
 CREATE INDEX IF NOT EXISTS idx_task_logs ON task_logs(task_id);
-'''
+"""
+
 
 class Store:
-    """Open short-lived foreign-key-enabled transactions with automatic rollback."""
+    """创建启用外键的短事务，异常时自动回滚。"""
+
     def __init__(self, path: str):
         self.path = path
         Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -31,7 +34,7 @@ class Store:
     def transaction(self) -> Iterator[sqlite3.Connection]:
         db = sqlite3.connect(self.path, timeout=10)
         db.row_factory = sqlite3.Row
-        db.execute('PRAGMA foreign_keys=ON')
+        db.execute("PRAGMA foreign_keys=ON")
         try:
             yield db
             db.commit()
