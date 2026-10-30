@@ -130,7 +130,7 @@ def run_demo(store: Store, output: str = "outputs") -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="EcomFlow — fictional multi-channel commerce automation"
+        description="EcomFlow：虚构多平台电商自动化系统"
     )
     parser.add_argument(
         "--db", default=os.getenv("ECOMFLOW_DB", "outputs/ecomflow.sqlite3")
@@ -216,7 +216,7 @@ def main() -> int:
         import logging
 
         logging.getLogger(__name__).exception("command failed: %s", args.command)
-        print(f"Error: {exc}", file=sys.stderr)
+        print(f"执行失败：{exc}", file=sys.stderr)
         return 1
 
 
