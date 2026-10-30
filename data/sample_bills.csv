@@ -1,0 +1,9 @@
+platform,platform_order_id,currency,gross_amount,refund_amount,fee_amount,settlement_amount,settlement_date
+platform_a,A-001,USD,20.00,0.00,2.00,18.00,2026-01-10
+platform_a,A-002,USD,30.00,0.00,3.00,26.00,2026-01-10
+platform_a,A-003,USD,20.00,0.00,2.00,18.00,2026-01-10
+platform_a,A-003,USD,20.00,0.00,2.00,18.00,2026-01-10
+platform_b,B-001,EUR,20.00,0.00,2.00,18.00,2026-01-10
+platform_b,B-002,USD,30.00,0.00,3.00,27.00,2026-01-10
+platform_b,B-003,USD,20.00,5.00,2.00,13.00,2026-01-10
+platform_b,B-999,USD,10.00,0.00,1.00,9.00,2026-01-10
