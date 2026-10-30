@@ -2,9 +2,15 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Annotated
-from pydantic import BaseModel, Field, ConfigDict, field_validator
+from pydantic import BaseModel, Field, ConfigDict, field_validator, BeforeValidator
 
-Money = Annotated[Decimal, Field(ge=0, max_digits=18, decimal_places=2)]
+def decimal_input(value):
+    """Reject floats before all financial model conversions."""
+    if isinstance(value, float):
+        raise ValueError('money must be decimal text')
+    return value
+
+Money = Annotated[Decimal, BeforeValidator(decimal_input), Field(ge=0, max_digits=18, decimal_places=2)]
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()
